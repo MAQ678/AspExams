@@ -1,6 +1,7 @@
 ﻿using InventoryManager.Data;
 using InventoryManager.Models;
 using InventoryManager.Models.Entities;
+using InventoryManager.Models.ViewModels;
 using InventoryManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,15 +55,14 @@ namespace InventoryManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Category,Price,Quantity")] ProductEntity Products)
+        public async Task<IActionResult> Create(ProductCreateViewModel product)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(Products);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(product);
             }
-            return View(Products);
+            await _inventoryService.AddAsync(product);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ProductEntities/Edit/5

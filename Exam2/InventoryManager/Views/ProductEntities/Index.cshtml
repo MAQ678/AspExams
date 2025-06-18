@@ -3,20 +3,20 @@
 @model IEnumerable<ProductListViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inventory Management System";
 }
 
-<h1>Index</h1>
+<h1><i class="bi bi-boxes"></i> Inventory Management System</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Product</a>
 </p>
 
 <div class="p-4 bg-white shadow-sm rounded">
 
     <form method="get" class="row g-4 mb-3">
         <div class="col-md-5">
-            <label class="form-label fw-semibold">Search Products</label>
+            <label class="form-label">Search Products</label>
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="bi bi-search"></i>
@@ -27,7 +27,7 @@
 
         @* Improve: After selecting option and submit, select the selected one *@
         <div class="col-md-5">
-            <label class="form-label fw-semibold">Filter by Category</label>
+            <label class="form-label ">Filter by Category</label>
             <select name="Category" class="form-select">
                 <option value="">All Categories</option>
                 @foreach (var category in Enum.GetNames(typeof(InventoryManager.Models.Entities.Category)))
@@ -37,7 +37,7 @@
             </select>
         </div>
         <div class="col-md-2">
-            <label class="form-label fw-semibold">Click to Search</label>
+            <label class="form-label">Click to Search</label>
             <button type="submit" class="btn btn-primary w-100">Search</button>
         </div>
     </form>

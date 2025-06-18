@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InventoryManager.Data.UnitOfWork;
 using InventoryManager.Models;
+using InventoryManager.Models.Entities;
 using InventoryManager.Models.ViewModels;
 using InventoryManager.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,12 @@ namespace InventoryManager.Services.Implementations
             var productEntities = await query.ToListAsync();
             var productViewModels = _mapper.Map<List<ProductListViewModel>>(productEntities);
             return productViewModels;
+        }
+        public async Task AddAsync(ProductCreateViewModel product)
+        {
+            var productEntity = _mapper.Map<ProductEntity>(product);
+            _unitOfWork.ProductRepository.Add(productEntity); 
+            await _unitOfWork.SaveAsync();
         }
     }
 }
