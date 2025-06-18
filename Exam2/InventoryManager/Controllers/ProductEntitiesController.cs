@@ -1,5 +1,7 @@
 ﻿using InventoryManager.Data;
 using InventoryManager.Models;
+using InventoryManager.Models.Entities;
+using InventoryManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,16 +10,19 @@ namespace InventoryManager.Controllers
     public class ProductEntitiesController : Controller
     {
         private readonly InventoryDbContext _context;
+        private readonly IInventoryService _inventoryService;
 
-        public ProductEntitiesController(InventoryDbContext context)
+        public ProductEntitiesController(InventoryDbContext context, IInventoryService inventoryService)
         {
             _context = context;
+            _inventoryService = inventoryService;
         }
 
         // GET: ProductEntities
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] FilterProductModel filter)
         {
-            return View(await _context.Products.ToListAsync());
+            var productListViewModels = await _inventoryService.GetFilteredProductListAsync(filter);
+            return View(productListViewModels);
         }
 
         // GET: ProductEntities/Details/5

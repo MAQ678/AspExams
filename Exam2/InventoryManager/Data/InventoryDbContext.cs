@@ -1,4 +1,4 @@
-﻿using InventoryManager.Models;
+﻿using InventoryManager.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManager.Data

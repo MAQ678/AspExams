@@ -1,4 +1,4 @@
-﻿namespace InventoryManager.Models
+﻿namespace InventoryManager.Models.Entities
 {
     public enum Category
     {

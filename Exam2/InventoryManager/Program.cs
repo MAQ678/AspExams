@@ -1,4 +1,10 @@
 using InventoryManager.Data;
+using InventoryManager.Data.UnitOfWork;
+using InventoryManager.Mapping;
+using InventoryManager.Repositories.Implementations;
+using InventoryManager.Repositories.Interfaces;
+using InventoryManager.Services.Implementations;
+using InventoryManager.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManager
@@ -14,6 +20,16 @@ namespace InventoryManager
 
             builder.Services.AddDbContext<InventoryDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IInventoryService, InventoryService>();
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+            builder.Configuration
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
             var app = builder.Build();
 
