@@ -12,7 +12,38 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<table class="table table-striped">
+<div class="p-4 bg-white shadow-sm rounded">
+
+    <form method="get" class="row g-4 mb-3">
+        <div class="col-md-5">
+            <label class="form-label fw-semibold">Search Products</label>
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" name="ProductName" class="form-control" placeholder="Search by product name..." />
+            </div>
+        </div>
+
+        @* Improve: After selecting option and submit, select the selected one *@
+        <div class="col-md-5">
+            <label class="form-label fw-semibold">Filter by Category</label>
+            <select name="Category" class="form-select">
+                <option value="">All Categories</option>
+                @foreach (var category in Enum.GetNames(typeof(InventoryManager.Models.Entities.Category)))
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label fw-semibold">Click to Search</label>
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped mt-4">
     <thead class="table-primary">
         <tr>
             <th>
@@ -60,7 +91,7 @@
                     {
                         <span class="badge rounded-pill bg-success">In Stock</span>
                     }
-                    else if(item.Status == QuantityStatus.LowStock)
+                    else if (item.Status == QuantityStatus.LowStock)
                     {
                         <span class="badge rounded-pill bg-warning">Low Stock</span>
                     }
