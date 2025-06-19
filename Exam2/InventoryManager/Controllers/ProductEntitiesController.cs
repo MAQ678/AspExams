@@ -73,12 +73,12 @@ namespace InventoryManager.Controllers
                 return NotFound();
             }
 
-            var Products = await _context.Products.FindAsync(id);
-            if (Products == null)
+            var productEditViewModel = await _inventoryService.GetByIdAsync(id.Value);
+            if (productEditViewModel == null)
             {
                 return NotFound();
             }
-            return View(Products);
+            return View(productEditViewModel);
         }
 
         // POST: ProductEntities/Edit/5
@@ -86,34 +86,20 @@ namespace InventoryManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,Price,Quantity")] ProductEntity Products)
+        public async Task<IActionResult> Edit(ProductEditViewModel product)
         {
-            if (id != Products.Id)
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+
+            bool isSuccess = await _inventoryService.UpdateAsync(product);
+            if (!isSuccess)
             {
                 return NotFound();
             }
+            return RedirectToAction(nameof(Index));
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(Products);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductsExists(Products.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(Products);
         }
 
         // GET: ProductEntities/Delete/5

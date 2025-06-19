@@ -42,5 +42,25 @@ namespace InventoryManager.Services.Implementations
             _unitOfWork.ProductRepository.Add(productEntity); 
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task<ProductEditViewModel?> GetByIdAsync(int id)
+        {
+            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(id);
+            var productEditViewModel = _mapper.Map<ProductEditViewModel>(productEntity);
+            return productEditViewModel;
+        }
+
+        public async Task<bool> UpdateAsync(ProductEditViewModel product)
+        {
+            var productEntity = _mapper.Map<ProductEntity>(product);
+            if (productEntity == null)
+            {
+                //Invalid entity
+                return false;
+            }
+            _unitOfWork.ProductRepository.Update(productEntity);
+            await _unitOfWork.SaveAsync();
+            return true;
+        }
     }
 }

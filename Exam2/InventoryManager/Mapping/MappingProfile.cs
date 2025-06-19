@@ -12,6 +12,8 @@ namespace InventoryManager.Mapping
             CreateMap<ProductEntity, ProductListViewModel>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => QuantityToStatusConverter.Convert(src.Quantity)));
             CreateMap<ProductCreateViewModel, ProductEntity>();
+            CreateMap<ProductEntity, ProductEditViewModel>();
+            CreateMap<ProductEditViewModel, ProductEntity>();
         }
     }
 }
