@@ -36,7 +36,7 @@ namespace InventoryManager
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/ProductEntities/Error");
+                app.UseExceptionHandler("/Inventory/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -50,7 +50,7 @@ namespace InventoryManager
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=ProductEntities}/{action=Index}/{id?}");
+                pattern: "{controller=Inventory}/{action=Index}/{id?}");
 
             app.Run();
         }
