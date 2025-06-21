@@ -7,8 +7,9 @@ namespace InventoryManager.Services.Interfaces
     public interface IInventoryService
     {
         Task AddAsync(ProductCreateViewModel product);
-        Task<ProductEditViewModel?> GetByIdAsync(int id);
-        Task<List<ProductListViewModel>> GetFilteredProductListAsync(FilterProductModel filter);
+        Task<ProductEditViewModel?> GetProductEditViewModelByIdAsync(int id);
+        Task<ProductInfoViewModel?> GetProductInfoViewModelByIdAsync(int id);
+        Task<List<ProductInfoViewModel>> GetFilteredProductListAsync(FilterProductModel filter);
         Task<bool> UpdateAsync(ProductEditViewModel product);
     }
 }

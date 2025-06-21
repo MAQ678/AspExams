@@ -2,7 +2,7 @@
 
 namespace InventoryManager.Models.ViewModels
 {
-    public class ProductListViewModel
+    public class ProductInfoViewModel
     {
         public int Id { get; set; }
         public required string Name { get; set; }

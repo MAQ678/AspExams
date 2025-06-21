@@ -33,15 +33,15 @@ namespace InventoryManager.Controllers
             {
                 return NotFound();
             }
-
-            var Products = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (Products == null)
+            var productInfoViewModel = await _inventoryService.GetProductInfoViewModelByIdAsync(id.Value);
+            //var Products = await _context.Products
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            if (productInfoViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(Products);
+            return View(productInfoViewModel);
         }
 
         // GET: ProductEntities/Create
@@ -73,7 +73,7 @@ namespace InventoryManager.Controllers
                 return NotFound();
             }
 
-            var productEditViewModel = await _inventoryService.GetByIdAsync(id.Value);
+            var productEditViewModel = await _inventoryService.GetProductEditViewModelByIdAsync(id.Value);
             if (productEditViewModel == null)
             {
                 return NotFound();

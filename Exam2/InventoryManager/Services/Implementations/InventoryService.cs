@@ -18,7 +18,7 @@ namespace InventoryManager.Services.Implementations
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<List<ProductListViewModel>> GetFilteredProductListAsync(FilterProductModel filter)
+        public async Task<List<ProductInfoViewModel>> GetFilteredProductListAsync(FilterProductModel filter)
         {
             var query = _unitOfWork.ProductRepository.Query();
 
@@ -33,7 +33,7 @@ namespace InventoryManager.Services.Implementations
             }
 
             var productEntities = await query.ToListAsync();
-            var productViewModels = _mapper.Map<List<ProductListViewModel>>(productEntities);
+            var productViewModels = _mapper.Map<List<ProductInfoViewModel>>(productEntities);
             return productViewModels;
         }
         public async Task AddAsync(ProductCreateViewModel product)
@@ -41,13 +41,6 @@ namespace InventoryManager.Services.Implementations
             var productEntity = _mapper.Map<ProductEntity>(product);
             _unitOfWork.ProductRepository.Add(productEntity); 
             await _unitOfWork.SaveAsync();
-        }
-
-        public async Task<ProductEditViewModel?> GetByIdAsync(int id)
-        {
-            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(id);
-            var productEditViewModel = _mapper.Map<ProductEditViewModel>(productEntity);
-            return productEditViewModel;
         }
 
         public async Task<bool> UpdateAsync(ProductEditViewModel product)
@@ -61,6 +54,20 @@ namespace InventoryManager.Services.Implementations
             _unitOfWork.ProductRepository.Update(productEntity);
             await _unitOfWork.SaveAsync();
             return true;
+        }
+
+        public async Task<ProductEditViewModel?> GetProductEditViewModelByIdAsync(int id)
+        {
+            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(id);
+            var productEditViewModel = _mapper.Map<ProductEditViewModel>(productEntity);
+            return productEditViewModel;
+        }
+
+        public async Task<ProductInfoViewModel?> GetProductInfoViewModelByIdAsync(int id)
+        {
+            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(id);
+            var productInfoViewModel = _mapper.Map<ProductInfoViewModel>(productEntity);
+            return productInfoViewModel;
         }
     }
 }

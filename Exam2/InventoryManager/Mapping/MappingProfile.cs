@@ -9,7 +9,7 @@ namespace InventoryManager.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<ProductEntity, ProductListViewModel>()
+            CreateMap<ProductEntity, ProductInfoViewModel>()
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => QuantityToStatusConverter.Convert(src.Quantity)));
             CreateMap<ProductCreateViewModel, ProductEntity>();
             CreateMap<ProductEntity, ProductEditViewModel>();
