@@ -1,21 +1,16 @@
-﻿using InventoryManager.Data;
-using InventoryManager.Models;
-using InventoryManager.Models.Entities;
+﻿using InventoryManager.Models;
 using InventoryManager.Models.ViewModels;
 using InventoryManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManager.Controllers
 {
     public class ProductEntitiesController : Controller
     {
-        private readonly InventoryDbContext _context;
         private readonly IInventoryService _inventoryService;
 
-        public ProductEntitiesController(InventoryDbContext context, IInventoryService inventoryService)
+        public ProductEntitiesController(IInventoryService inventoryService)
         {
-            _context = context;
             _inventoryService = inventoryService;
         }
 
@@ -34,8 +29,6 @@ namespace InventoryManager.Controllers
                 return NotFound();
             }
             var productInfoViewModel = await _inventoryService.GetProductInfoViewModelByIdAsync(id.Value);
-            //var Products = await _context.Products
-            //    .FirstOrDefaultAsync(m => m.Id == id);
             if (productInfoViewModel == null)
             {
                 return NotFound();
@@ -110,34 +103,22 @@ namespace InventoryManager.Controllers
                 return NotFound();
             }
 
-            var Products = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (Products == null)
+            var productInfoViewModel = await _inventoryService.GetProductInfoViewModelByIdAsync(id.Value);
+            if (productInfoViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(Products);
+            return View(productInfoViewModel);
         }
 
         // POST: ProductEntities/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteConfirmed")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmedAsync(int id)
         {
-            var Products = await _context.Products.FindAsync(id);
-            if (Products != null)
-            {
-                _context.Products.Remove(Products);
-            }
-
-            await _context.SaveChangesAsync();
+            await _inventoryService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProductsExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

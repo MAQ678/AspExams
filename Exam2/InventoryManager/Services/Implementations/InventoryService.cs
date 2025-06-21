@@ -69,5 +69,15 @@ namespace InventoryManager.Services.Implementations
             var productInfoViewModel = _mapper.Map<ProductInfoViewModel>(productEntity);
             return productInfoViewModel;
         }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            var productEntity = await _unitOfWork.ProductRepository.GetByIdAsync(id);
+            if(productEntity !=  null)
+            {
+                _unitOfWork.ProductRepository.Delete(productEntity);
+                await _unitOfWork.SaveAsync();
+            }
+        }
     }
 }

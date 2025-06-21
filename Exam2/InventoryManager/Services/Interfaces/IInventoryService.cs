@@ -1,5 +1,4 @@
 ﻿using InventoryManager.Models;
-using InventoryManager.Models.Entities;
 using InventoryManager.Models.ViewModels;
 
 namespace InventoryManager.Services.Interfaces
@@ -11,5 +10,6 @@ namespace InventoryManager.Services.Interfaces
         Task<ProductInfoViewModel?> GetProductInfoViewModelByIdAsync(int id);
         Task<List<ProductInfoViewModel>> GetFilteredProductListAsync(FilterProductModel filter);
         Task<bool> UpdateAsync(ProductEditViewModel product);
+        Task DeleteByIdAsync(int id);
     }
 }

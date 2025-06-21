@@ -4,7 +4,7 @@ namespace InventoryManager.Models.Entities
 {
     public class ProductEntity : BaseEntity
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Required]
         public Category Category { get; set; }
         public double Price { get; set; }
