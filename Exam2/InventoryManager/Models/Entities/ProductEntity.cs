@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InventoryManager.Models
+namespace InventoryManager.Models.Entities
 {
-    public class ProductEntity
+    public class ProductEntity : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Required]
         public Category Category { get; set; }
         public double Price { get; set; }

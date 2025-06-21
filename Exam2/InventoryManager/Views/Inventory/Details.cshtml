@@ -1,0 +1,62 @@
+﻿@using InventoryManager.Models.Entities
+@using InventoryManager.Models.ViewModels
+@model ProductInfoViewModel
+
+@{
+    ViewData["Title"] = "View Product";
+}
+
+<h1>Product Information</h1>
+<hr />
+
+<div>
+   @*  <h4>ProductEntity</h4>
+    <hr /> *@
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.Status == QuantityStatus.InStock)
+            {
+                <span class="badge rounded-pill bg-success">In Stock</span>
+            }
+            else if (Model.Status == QuantityStatus.LowStock)
+            {
+                <span class="badge rounded-pill bg-warning">Low Stock</span>
+            }
+            else
+            {
+                <span class="badge rounded-pill bg-danger">Out of Stock</span>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> 
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

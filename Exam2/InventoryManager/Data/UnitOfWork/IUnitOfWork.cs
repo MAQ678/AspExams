@@ -4,7 +4,7 @@ namespace InventoryManager.Data.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IProductRepositroy ProductRepository { get; }
+        IProductRepository ProductRepository { get; }
         Task<int> SaveAsync();
     }
 }
