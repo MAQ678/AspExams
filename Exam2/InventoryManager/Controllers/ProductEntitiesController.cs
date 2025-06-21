@@ -2,6 +2,7 @@
 using InventoryManager.Models.ViewModels;
 using InventoryManager.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace InventoryManager.Controllers
 {
@@ -119,6 +120,13 @@ namespace InventoryManager.Controllers
         {
             await _inventoryService.DeleteByIdAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
